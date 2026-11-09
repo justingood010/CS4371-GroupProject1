@@ -1,4 +1,10 @@
-Set up virtual environment and install dependencies:
+Required software:
+WSL
+Apache Kafka
+
+Use WSL for all terminals.
+
+Set up a virtual environment and install dependencies(project directory):
 # 1. Install the venv module if you don't have it (might need sudo)
 sudo apt update
 sudo apt install python3-venv
@@ -10,7 +16,7 @@ python3 -m venv venv
 source venv/bin/activate
 
 # 4. Install the required packages
-pip install websockets pyspark confluent_kafka spacy
+pip install websockets pyspark confluent_kafka spacy (might be missing some)
 
 Start kafka(in kafka directory):
 # 1. Generate UUID
@@ -22,6 +28,10 @@ bin/kafka-storage.sh format --standalone -t <your-UUID> -c config/server.propert
 # 3. Start
 bin/kafka-server-start.sh config/server.properties
 
-For testing, create consumers in separate WSl terminals(inside kafka directory):
+Run scripts in separate terminals(project directory):
+python producer.py
+python namedEntities.py
+
+For testing, create consumers in separate terminals(inside the kafka directory):
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic bsky-posts
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic entities-counts

@@ -40,11 +40,13 @@ async def listen():
                             
                             # Only produce if there is actual text
                             if text:
-                                # Produce to Kafka with a callback to catch errors
-                                producer.produce("bsky-posts", value=text, callback=delivery_report)
+                                clean_text = " ".join(text.split())
 
-                                # Trigger callbacks and keep the queue moving
-                                producer.poll(0) 
+                                if clean_text:
+                                    producer.produce("bsky-posts", value=clean_text, callback=delivery_report)
+
+                                    # Trigger callbacks and keep the queue moving
+                                    producer.poll(0) 
                                 
                         # ASYNC sleep to prevent blocking the websocket
                         await asyncio.sleep(0.1) 

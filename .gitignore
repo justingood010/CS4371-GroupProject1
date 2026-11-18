@@ -1,2 +1,5 @@
 venv/
 Submission/
+spark-checkpoints/
+ag_news_model/
+__pycache__/
